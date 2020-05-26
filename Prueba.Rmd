@@ -1,0 +1,45 @@
+---
+title: Data analysis for cardiac predictor
+author : Juan Cruz De Lorenzo, Agustin Augurusa, Florencia Froschauer
+output: 
+  html_document:
+    theme: paper
+    highlight: kate
+    self_contained : yes
+    toc : true
+    toc_float : true
+---
+
+### Introduction
+
+The Cardiology service of a university hospital sent us to carry out a system that facilitates the decision to admit / not admit a patient who enters the ward for possible cardiac problems. To do this, we were given a data set containing the data from 1000 patients with cardiac events admitted to the same hospital.
+
+### Data Study
+
+In the dataset we find 20 variables that represent the questions that a patient is asked when they enter the guard, to determine which ones are important we investigated the main risk factors for people with cardiac events and their causes.
+
+```{r graph, echo=FALSE, message=FALSE}
+library(ggplot2)
+library(readr)
+
+dataset <- read_csv("C:/Users/I5/Downloads/dataset.csv")
+pacientsWithEvents = subset(dataset, Evento == 1)
+pacientsQ4 = subset(pacientsWithEvents, select = c(Edad, Género))
+pacientsQ4$Género[pacientsQ4$Género == "1"] = "Hombre"
+pacientsQ4$Género[pacientsQ4$Género == "0"] = "Mujer"
+
+ggplot(pacientsQ4, aes(x = Edad, fill = Género)) +
+    geom_density(alpha = 0.4) +
+    scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+    theme(legend.position = "top") + 
+    ggtitle("Patients with events")
+```
+
+### Interpretation
+
+Comportamientos y relaciones entre variables, analisis de graficos...
+
+### Predictor
+
+Explicacion del predictor de eventos...
+
