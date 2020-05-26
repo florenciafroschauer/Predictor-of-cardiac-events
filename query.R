@@ -19,11 +19,11 @@ pacientsQ2 = subset(pacientsWithEvents, OBES == 1 & DLP == 1 & DBT == 1)
 pacientsQ3 = subset(pacientsWithEvents, HTA == 1)
 
 #Question 4 : Relacion genero con eventos cardiacos
-pacientsQ4 = subset(pacientsWithEvents, select = c(Edad, Género))
-pacientsQ4$Género[pacientsQ4$Género == "1"] = "Hombre"
-pacientsQ4$Género[pacientsQ4$Género == "0"] = "Mujer"
+pacientsQ4 = subset(pacientsWithEvents, select = c(Edad, G?nero))
+pacientsQ4$G?nero[pacientsQ4$G?nero == "1"] = "Hombre"
+pacientsQ4$G?nero[pacientsQ4$G?nero == "0"] = "Mujer"
 
-ggplot(pacientsQ4, aes(x = Edad, fill = Género)) +
+ggplot(pacientsQ4, aes(x = Edad, fill = G?nero)) +
   geom_density(alpha = 0.4) +
   scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
   theme(legend.position = "top") +
