@@ -19,20 +19,28 @@ The Cardiology service of a university hospital sent us to carry out a system th
 In the dataset we find 20 variables that represent the questions that a patient is asked when they enter the guard, to determine which ones are important we investigated the main risk factors for people with cardiac events and their causes.
 
 ```{r graph, echo=FALSE, message=FALSE}
+library(plotrix)
+library(ggridges)
 library(ggplot2)
+library(treemap)
+library(dplyr)
+library(babynames)
+library(maps)
+library(geosphere)
+library(plotly)
+library(gapminder)
+library(gganimate)
 library(readr)
 
 dataset <- read_csv("C:/Users/I5/Downloads/dataset.csv")
+colnames(dataset)[2] <- "Genero"
 pacientsWithEvents = subset(dataset, Evento == 1)
-pacientsQ4 = subset(pacientsWithEvents, select = c(Edad, Género))
-pacientsQ4$Género[pacientsQ4$Género == "1"] = "Hombre"
-pacientsQ4$Género[pacientsQ4$Género == "0"] = "Mujer"
+patientsQ8 = subset(pacientsWithEvents, select = (Edad))
+more65 <- round(sum(patientsQ8$Edad>65)/length(patientsQ8$Edad)*100)
+less65 <- round(sum(patientsQ8$Edad<=50)/length(patientsQ8$Edad)*100)
+pie3D(c(more65,less65),main = "Patients with events age´s", labels = c(paste(more65,"%"),paste(less65,"%")),col = c("lightgreen","#ffff99"),labelcex = 1, explode = 0.1, theta = 1, mar = c(5,5,5,5))
+legend(.3,1,c("Age >65","Age <=65"),fill = c("lightgreen","#ffff99"))
 
-ggplot(pacientsQ4, aes(x = Edad, fill = Género)) +
-    geom_density(alpha = 0.4) +
-    scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
-    theme(legend.position = "top") + 
-    ggtitle("Patients with events")
 ```
 
 ### Interpretation
