@@ -8,17 +8,22 @@ output:
     self_contained : yes
     toc : true
     toc_float : true
+    toc_depth: 6
 ---
 
 ### Introduction
 
 The Cardiology service of a university hospital sent us to carry out a system that facilitates the decision to admit / not admit a patient who enters the ward for possible cardiac problems. To do this, we were given a data set containing the data from 1000 patients with cardiac events admitted to the same hospital.
 
-### Data Study
+### Data presentation
 
 In the dataset we find 20 variables that represent the questions that a patient is asked when they enter the guard, to determine which ones are important we investigated the main risk factors for people with cardiac events and their causes.
 
-```{r graph, echo=FALSE, message=FALSE}
+#### Generality {.tabset .tabset-fade .tabset-pills} 
+
+##### Gender
+
+```{r byGender, echo=FALSE, message=FALSE}
 library(plotrix)
 library(ggridges)
 library(ggplot2)
@@ -35,19 +40,163 @@ library(readr)
 dataset <- read_csv("C:/Users/I5/Downloads/dataset.csv")
 colnames(dataset)[2] <- "Genero"
 pacientsWithEvents = subset(dataset, Evento == 1)
+
+patientsQ5 = subset(pacientsWithEvents, select = (Genero))
+patientsQ5$Genero[patientsQ5$Genero == "1"] = "Hombre"
+patientsQ5$Genero[patientsQ5$Genero == "0"] = "Mujer"
+slices = c(sum(patientsQ5$Genero == "Hombre"), sum(patientsQ5$Genero == "Mujer"))
+lbls = c("Men", "                     Women")
+pct = round(slices/sum(slices)*100)
+lbls <- paste(lbls, pct)
+lbls <- paste(lbls,"%        ",sep="")
+
+pie3D(slices,labels=lbls ,main="Patients percentege by gender", col=c("#66ccff", "#ff99cc"), explode = 0.08, theta = 1, mar = c(5,5,5,5), labelcex = 1)
+
+```
+From the patients with events, 97 were men and 24 were women.
+
+As we can see in the graphic, the vast majority of the patients with events were men. 
+
+ 
+##### Age
+
+```{r byAge, echo=FALSE, message=FALSE}
+
 patientsQ8 = subset(pacientsWithEvents, select = (Edad))
-more65 <- round(sum(patientsQ8$Edad>65)/length(patientsQ8$Edad)*100)
-less65 <- round(sum(patientsQ8$Edad<=50)/length(patientsQ8$Edad)*100)
-pie3D(c(more65,less65),main = "Patients with events age´s", labels = c(paste(more65,"%"),paste(less65,"%")),col = c("lightgreen","#ffff99"),labelcex = 1, explode = 0.1, theta = 1, mar = c(5,5,5,5))
-legend(.3,1,c("Age >65","Age <=65"),fill = c("lightgreen","#ffff99"))
+more65 <- round(sum(patientsQ8$Edad>55)/length(patientsQ8$Edad)*100)
+less65 <- round(sum(patientsQ8$Edad<=55)/length(patientsQ8$Edad)*100)
+pie3D(c(more65,less65),main = "Patients percentege by age", labels = c(paste(more65,"%"),paste(less65,"%")),col = c("lightgreen","#ffff99"),labelcex = 1, start = 0, explode = 0.08, theta = 1, mar = c(5,5,5,5))
+legend(.3,1,c("Age > 55","Age <= 55"),fill = c("lightgreen","#ffff99"))
+
+```
+From the pacients with events, 36 had 55 years or less and 85 had more than 55 years
+
+ 
+##### Risk factor
+
+```{r byRiskFactor, echo=FALSE, message=FALSE}
+
+slices = c(sum(pacientsWithEvents$HTA == 1), sum(pacientsWithEvents$DLP == 1), sum(pacientsWithEvents$TBQ == 1), sum(pacientsWithEvents$OBES == 1), sum(pacientsWithEvents$DBT == 1))
+lbls = c("Hypertension", "Cholesterol", "Smoking", "Obesity", "Diabetes")
+pct = round(slices/sum(pacientsWithEvents$Evento)*100)
+lbls <- paste(lbls, pct)
+lbls <- paste(lbls,"%",sep="")
+
+pie3D(slices,labels=lbls ,main="Patients with events by risk factor", col=c("#ccff99", "#ffcc99","#ff99cc", "#cc99ff", "#99ccff"), explode = 0.03, theta = 1, mar = c(5,5,5,5), labelcex = 1)
 
 ```
 
-### Interpretation
+#### {-}
 
-Comportamientos y relaciones entre variables, analisis de graficos...
+### Data Analysis
 
-### Predictor
+After analyzing the variables, we made an interpretation of each by crossing data in order to obtain a better perspective of what are the main risk factors that cause cardiac events. 
 
-Explicacion del predictor de eventos...
+#### Range of ages of each risk factor {.tabset .tabset-fade .tabset-pills} 
+
+##### Hypertension
+
+```{r HTA, echo=FALSE, message=FALSE}
+patientsHTA = subset(pacientsWithEvents, HTA == 1)
+patientsHTA = subset(patientsHTA, select = c(Edad, Genero))
+patientsHTA$Genero[patientsHTA$Genero == "1"] = "Hombre"
+patientsHTA$Genero[patientsHTA$Genero == "0"] = "Mujer"
+
+ggplot(patientsHTA, aes(x = Edad, fill = Genero)) +
+  geom_density(alpha = 0.4) +
+  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  theme_ridges() + 
+  xlab("Age") +
+  ylab("Density") +
+  ggtitle("Range of ages from patients with hipertension") + 
+  theme_minimal()
+
+```
+
+##### Cholesterol
+
+```{r DLP, echo=FALSE, message=FALSE}
+patientsDLP = subset(pacientsWithEvents, DLP == 1)
+patientsDLP = subset(patientsDLP, select = c(Edad, Genero))
+patientsDLP$Genero[patientsDLP$Genero == "1"] = "Hombre"
+patientsDLP$Genero[patientsDLP$Genero == "0"] = "Mujer"
+
+ggplot(patientsDLP, aes(x = Edad, fill = Genero)) +
+  geom_density(alpha = 0.4) +
+  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  theme_ridges() + 
+  xlab("Age") +
+  ylab("Density") +
+  ggtitle("Range of ages from patients with Cholesterol") + 
+  theme_minimal()
+
+```
+
+##### Smoking
+
+```{r TBQ, echo=FALSE, message=FALSE}
+patientsTBQ = subset(pacientsWithEvents, TBQ == 1)
+patientsTBQ = subset(patientsTBQ, select = c(Edad, Genero))
+patientsTBQ$Genero[patientsTBQ$Genero == "1"] = "Hombre"
+patientsTBQ$Genero[patientsTBQ$Genero == "0"] = "Mujer"
+
+ggplot(patientsTBQ, aes(x = Edad, fill = Genero)) +
+  geom_density(alpha = 0.4) +
+  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  theme_ridges() + 
+  xlab("Age") +
+  ylab("Density") +
+  ggtitle("Range of ages from smoking patients") + 
+  theme_minimal()
+
+```
+
+##### Obesity
+
+```{r OBES, echo=FALSE, message=FALSE}
+patientsOBES = subset(pacientsWithEvents, OBES == 1)
+patientsOBES = subset(patientsOBES, select = c(Edad, Genero))
+patientsOBES$Genero[patientsOBES$Genero == "1"] = "Hombre"
+patientsOBES$Genero[patientsOBES$Genero == "0"] = "Mujer"
+
+ggplot(patientsOBES, aes(x = Edad, fill = Genero)) +
+  geom_density(alpha = 0.4) +
+  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  theme_ridges() + 
+  xlab("Age") +
+  ylab("Density") +
+  ggtitle("Range of ages from patientes with obesity") + 
+  theme_minimal()
+
+```
+
+##### Diabetes
+
+```{r DBT, echo=FALSE, message=FALSE}
+patientsDBT = subset(pacientsWithEvents, DBT == 1)
+patientsDBT= subset(patientsDBT, select = c(Edad, Genero))
+patientsDBT$Genero[patientsDBT$Genero == "1"] = "Hombre"
+patientsDBT$Genero[patientsDBT$Genero == "0"] = "Mujer"
+
+ggplot(patientsDBT, aes(x = Edad, fill = Genero)) +
+  geom_density(alpha = 0.4) +
+  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  theme_ridges() + 
+  xlab("Age") +
+  ylab("Density") +
+  ggtitle("Range of ages from patients with diabetes") + 
+  theme_minimal()
+
+```
+#### {-}
+
+Risk factor   | Female mean age | Male mean age | Total mean 
+------------- | --------------- | ------------- | -----------
+Hypertension  | 68              | 66            | 67
+Cholesterol   | 67              | 64            | 64
+Smoking       | 63              | 61            | 61
+Obesity       | 65              | 60            | 61   
+Diabetes      | 65              | 66            | 66
+
+
 
