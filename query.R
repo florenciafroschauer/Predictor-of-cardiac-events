@@ -14,9 +14,10 @@ library(gapminder)
 library(gganimate)
 
 colnames(dataset)[2] <- "Genero"
+pacientsWithEvents = subset(dataset, Evento == 1)
+patientsWithoutEvents = subset(dataset, Evento == 0)
 
 # Question 1 : Rango de edad de personas con eventos cardiacos fumadores
-pacientsWithEvents = subset(dataset, Evento == 1)
 pacientsSmokersEvent = subset(pacientsWithEvents, TBQ == 1)
 pacientsQ1 = subset(pacientsWithEvents, TBQ == 1)
 table1 = table(pacientsSmokersEvent$Edad)
@@ -180,12 +181,6 @@ ggplot(patientsDBT, aes(x = Edad, fill = Genero)) +
 
 ## DBT, HTA , OBES
 
+patientsWithSmeA = subset(pacientsWithEvents, SmeA == 1)
 
-Risk factor   | Patients with events | Patients without events
-------------- | -------------------- | -----------------------
-Hypertension  | 62%                  | 29%
-Cholesterol   | 58%                  | 24%         
-Smoking       | 46%                  | 23%
-Obesity       | 45%                  | 19%
-Diabetes      | 27%                  | 9%  
 
