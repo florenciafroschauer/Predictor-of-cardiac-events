@@ -10,7 +10,6 @@ output:
     toc_float : true
     toc_depth: 6
 ---
-
 ### Introduction
 
 The Cardiology service of a university hospital sent us to carry out a system that facilitates the decision to admit / not admit a patient who enters the ward for possible cardiac problems. To do this, we were given a data set containing the data from 1000 patients with cardiac events admitted to the same hospital.
@@ -86,7 +85,7 @@ pie3D(slices,labels=lbls ,main="Patients with events by risk factor", col=c("#cc
 
 ```
 
-### {-}
+### {.unlsited} 
 
 ### Data Analysis
 
@@ -189,7 +188,7 @@ ggplot(patientsDBT, aes(x = Edad, fill = Genero)) +
 
 ```
 
-### {-}
+### {.unlisted} 
 
 Risk factor   | Female mean age | Male mean age | Total mean 
 ------------- | --------------- | ------------- | -----------

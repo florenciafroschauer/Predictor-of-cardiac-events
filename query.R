@@ -189,20 +189,62 @@ patientsWithSmeA = subset(pacientsWithEvents, SmeA == 1)
 CDpatients = subset(dataset, select=c(Evento, CD))
 CDpatients$Evento[CDpatients$Evento == 0] = "Without Events"
 CDpatients$Evento[CDpatients$Evento == 1] = "With Events"
-CDpatients$CD[CDpatients$CD == -1] = "PQA"
-CDpatients$CD[CDpatients$CD == 0] = "Other"
-CDpatients$CD[CDpatients$CD == 1] = "Oppressive"
 CD = factor(CDpatients$CD, levels=c(-1,1), labels = c("SDA", "Oppressive"))
 
 ggplot(CDpatients, aes(CD, group = Evento)) + 
-  geom_bar(aes(y = ..prop..), stat="count") + 
+  geom_bar(aes(y = ..prop.., fill = factor(..x..)), stat="count") + 
   scale_y_continuous(labels=scales::percent) +
   ylab("Percentege") +
   xlab("Grief Type") +
   facet_grid(~Evento)
 
-  ggplot(CDpatients, aes(fill = ,y = ..prop.., x = CD, group = Evento)) + 
-    geom_bar(stat="count") +
-    facet_grid(~Evento) + 
-    scale_y_continuous(labels=scales::percent)
+## SmeA y HTA
 
+SmeAHTA = subset(pacientsWithEvents, HTA == 1 & SmeA == 1)
+SmeAHTA = subset(SmeAHTA, select = c(Edad))
+
+ggplot(SmeAHTA, aes(x = Edad)) + 
+  geom_density(alpha = 0.4, fill = "coral1" )+ 
+  scale_fill_discrete(name = "Chest Pain Type") + 
+  theme_minimal() +
+  ggtitle("Range of ages from patients with SmeA and HTA")
+
+##
+
+SmeADD20 = subset(dataset, SmeA == 0 & DD == 1)
+SmeADD20 = subset(SmeADD20, select = c(Evento, Edad))
+
+ggplot(SmeADD20, aes(x = Edad, fill = Evento)) + 
+  geom_density(alpha = 0.4) + 
+  scale_fill_discrete(name = "Patients", labels = c("Events","No Events")) +
+  xlab("Age") +
+  ylab("Density") +
+  ggtitle("Range of ages from patients with SmeA and DD over ") + 
+  theme_minimal()
+
+## Relevancia de todos los factores en eventos pacientes con eventos cardiacos
+
+Genero = c("Men", "Women")
+SmeA = c(nrow(subset(pacientsWithEvents, Genero == 1 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+         nrow(subset(pacientsWithEvents, Genero == 0 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+SCApHR = c(nrow(subset(pacientsWithEvents, Genero == 1 & SCApHR == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+           nrow(subset(pacientsWithEvents, Genero == 0 & SCApHR == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+PDA = c(nrow(subset(pacientsWithEvents, Genero == 1 & PDA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & PDA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+HTA = c(nrow(subset(pacientsWithEvents, Genero == 1 & HTA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & HTA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+DBT = c(nrow(subset(pacientsWithEvents, Genero == 1 & DBT == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & DBT == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+DLP = c(nrow(subset(pacientsWithEvents, Genero == 1 & DLP == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & DLP == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+TBQ = c(nrow(subset(pacientsWithEvents, Genero == 1 & TBQ == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & TBQ == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+OBES = c(nrow(subset(pacientsWithEvents, Genero == 1 & OBES == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+         nrow(subset(pacientsWithEvents, Genero == 0 & OBES == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+AHF = c(nrow(subset(pacientsWithEvents, Genero == 1 & AHF == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & AHF == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+allFactorRelevance = data.frame(SmeA, SCApHR, PDA, HTA, DBT, DLP, TBQ, OBES, AHF)
+rownames(allFactorRelevance) = c("Men", "Women")
+
+barplot(allFactorRelevance, beside=TRUE,legend.text=TRUE,col=c("pink","cyan"))
