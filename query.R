@@ -27,7 +27,7 @@ ggplot(pacientsQ1, aes(x = Edad)) +
   ggtitle("Smoking Patients")+
   theme_ridges()
 
-#Question 2 :  Rango de edad de diabeticos, alteracion de lipidos y obesos con eventos cardiacos
+# Question 2 :  Rango de edad de diabeticos, alteracion de lipidos y obesos con eventos cardiacos
 pacientsQ2 = subset(pacientsWithEvents, OBES == 1 & DLP == 1 & DBT == 1)
 pacientsQ2 = subset(pacientsQ2, select = c(Edad, Genero))
 pacientsQ2$Genero[pacientsQ2$Genero == "1"] = "Hombre"
@@ -39,10 +39,10 @@ ggplot(pacientsQ2, aes(x = Edad, fill = Genero)) +
   theme(legend.position = "top") +
   theme_ridges() 
 
-#Question 3 : Frecuencia de edad de hipertencion en gente con eventos cardiacos
+# Question 3 : Frecuencia de edad de hipertencion en gente con eventos cardiacos
 pacientsQ3 = subset(pacientsWithEvents, HTA == 1)
 
-#Question 4 : Relacion genero con eventos cardiacos (DLP, DBT, OBES)
+# Question 4 : Relacion genero con eventos cardiacos (DLP, DBT, OBES)
 pacientsQ4 = subset(pacientsWithEvents, select = c(Edad, Genero))
 pacientsQ4$Genero[pacientsQ4$Genero == "1"] = "Hombre"
 pacientsQ4$Genero[pacientsQ4$Genero == "0"] = "Mujer"
@@ -58,7 +58,7 @@ ggplot(pacientsQ4, aes(x = Edad, fill = Genero)) +
   theme_minimal()
   
 
-#Question 5 : Cantidad de mujeres y varones con eventos (Data Study)
+# Question 5 : Cantidad de mujeres y varones con eventos (Data Study)
 patientsQ5 = subset(pacientsWithEvents, select = (Genero))
 patientsQ5$Genero[patientsQ5$Genero == "1"] = "Hombre"
 patientsQ5$Genero[patientsQ5$Genero == "0"] = "Mujer"
@@ -71,7 +71,7 @@ lbls <- paste(lbls,"%",sep="")
 pie3D(slices,labels=lbls ,main="Patients with events", col=c("#66ccff", "#ff99cc"), explode = 0.1, theta = 1, mar = c(5,5,5,5), labelcex = 1)
 
 
-#Question 8 : Cantidad pacientes con eventos >65 y <65:
+# Question 8 : Cantidad pacientes con eventos >65 y <65:
 patientsQ8 = subset(pacientsWithEvents, select = (Edad))
 more65 <- round(sum(patientsQ8$Edad>55)/length(patientsQ8$Edad)*100)
 less65 <- round(sum(patientsQ8$Edad<=55)/length(patientsQ8$Edad)*100)
@@ -79,11 +79,11 @@ pie3D(c(more65,less65),main = "Patients percentege by age", labels = c(paste(mor
 legend(.3,1,c("Age >55","Age <=55"),fill = c("lightgreen","#ffff99"))
 
 
-#Question 6 : Rango de edades de personas con un evento cardiaco, fumadores y que presente hipertension arterial
+# Question 6 : Rango de edades de personas con un evento cardiaco, fumadores y que presente hipertension arterial
 pacientsQ6 = subset(pacientsWithEvents, TBQ == 1 & HTA == 1)
 tableQ6 = table(pacientsQ6$Edad)
 
-#Question 7 : colesterol(DLP), diabetes(DBT), obesidad(OBES) y relacion entre ellos
+# Question 7 : colesterol(DLP), diabetes(DBT), obesidad(OBES) y relacion entre ellos
 patientsWithEventsDLP = subset(pacientsWithEvents, DLP == 1)
 patientsWithEventsDBT = subset(pacientsWithEvents, DBT == 1)
 patientsWithEventsOBES = subset(pacientsWithEvents, OBES == 1)
@@ -101,9 +101,9 @@ ggplot(data, aes(x=x, y=y)) +
   theme_ridges()
 
 
-#Range of ages for each risk 
+# Range of ages for each risk 
 
-##HTA
+## HTA
 patientsHTA = subset(pacientsWithEvents, HTA == 1)
 patientsHTA = subset(patientsHTA, select = c(Edad, Genero))
 patientsHTA$Genero[patientsHTA$Genero == "1"] = "Hombre"
@@ -118,7 +118,7 @@ ggplot(patientsHTA, aes(x = Edad, fill = Genero)) +
   ggtitle("Range of ages from patients with hipertension") + 
   theme_minimal()
 
-##DLP
+## DLP
 patientsDLP = subset(pacientsWithEvents, DLP == 1)
 patientsDLP = subset(patientsDLP, select = c(Edad, Genero))
 patientsDLP$Genero[patientsDLP$Genero == "1"] = "Hombre"
@@ -133,7 +133,7 @@ ggplot(patientsDLP, aes(x = Edad, fill = Genero)) +
   ggtitle("Range of ages from patients with Cholesterol") + 
   theme_minimal()
 
-##TBQ
+## TBQ
 patientsTBQ = subset(pacientsWithEvents, TBQ == 1)
 patientsTBQ = subset(patientsTBQ, select = c(Edad, Genero))
 patientsTBQ$Genero[patientsTBQ$Genero == "1"] = "Hombre"
@@ -148,7 +148,7 @@ ggplot(patientsTBQ, aes(x = Edad, fill = Genero)) +
   ggtitle("Range of ages from smoking patients") + 
   theme_minimal()
 
-##OBES
+## OBES
 patientsOBES = subset(pacientsWithEvents, OBES == 1)
 patientsOBES = subset(patientsOBES, select = c(Edad, Genero))
 patientsOBES$Genero[patientsOBES$Genero == "1"] = "Hombre"
@@ -163,7 +163,7 @@ ggplot(patientsOBES, aes(x = Edad, fill = Genero)) +
   ggtitle("Range of ages from patientes with obesity") + 
   theme_minimal()
 
-##DBT
+## DBT
 
 patientsDBT = subset(pacientsWithEvents, DBT == 1)
 patientsDBT= subset(patientsDBT, select = c(Edad, Genero))
@@ -183,4 +183,26 @@ ggplot(patientsDBT, aes(x = Edad, fill = Genero)) +
 
 patientsWithSmeA = subset(pacientsWithEvents, SmeA == 1)
 
+## Caracteristicas del dolor en personas con eventos y sin eventos
+
+
+CDpatients = subset(dataset, select=c(Evento, CD))
+CDpatients$Evento[CDpatients$Evento == 0] = "Without Events"
+CDpatients$Evento[CDpatients$Evento == 1] = "With Events"
+CDpatients$CD[CDpatients$CD == -1] = "PQA"
+CDpatients$CD[CDpatients$CD == 0] = "Other"
+CDpatients$CD[CDpatients$CD == 1] = "Oppressive"
+CD = factor(CDpatients$CD, levels=c(-1,1), labels = c("SDA", "Oppressive"))
+
+ggplot(CDpatients, aes(CD, group = Evento)) + 
+  geom_bar(aes(y = ..prop..), stat="count") + 
+  scale_y_continuous(labels=scales::percent) +
+  ylab("Percentege") +
+  xlab("Grief Type") +
+  facet_grid(~Evento)
+
+  ggplot(CDpatients, aes(fill = ,y = ..prop.., x = CD, group = Evento)) + 
+    geom_bar(stat="count") +
+    facet_grid(~Evento) + 
+    scale_y_continuous(labels=scales::percent)
 
