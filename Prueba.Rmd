@@ -14,7 +14,7 @@ output:
 
 The Cardiology service of a university hospital sent us to carry out a system that facilitates the decision to admit / not admit a patient who enters the ward for possible cardiac problems. To do this, we were given a data set containing the data from 1000 patients with cardiac events admitted to the same hospital.
 
-### Data presentation
+### Data Analysis
 
 In the dataset we find 20 variables that represent the questions that a patient is asked when they enter the guard, to determine which ones are important we investigated the main risk factors for people with cardiac events and their causes.
 
@@ -87,9 +87,48 @@ pie3D(slices,labels=lbls ,main="Patients with events by risk factor", col=c("#cc
 
 ### {.unlsited} 
 
-### Data Analysis
+#### Presence of .... in patients with events
 
-After analyzing the variables, we made an interpretation of each by crossing data in order to obtain a better perspective of what are the main risk factors that cause cardiac events. 
+Texto...
+
+```{r Presence of Variables, echo=FALSE, message=FALSE}
+SmeA = c(nrow(subset(pacientsWithEvents, Genero == 1 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+         nrow(subset(pacientsWithEvents, Genero == 0 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+SCApHR = c(nrow(subset(pacientsWithEvents, Genero == 1 & SCApHR == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+           nrow(subset(pacientsWithEvents, Genero == 0 & SCApHR == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+HTA = c(nrow(subset(pacientsWithEvents, Genero == 1 & HTA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & HTA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+DBT = c(nrow(subset(pacientsWithEvents, Genero == 1 & DBT == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & DBT == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+DLP = c(nrow(subset(pacientsWithEvents, Genero == 1 & DLP == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & DLP == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+TBQ = c(nrow(subset(pacientsWithEvents, Genero == 1 & TBQ == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & TBQ == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+OBES = c(nrow(subset(pacientsWithEvents, Genero == 1 & OBES == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+         nrow(subset(pacientsWithEvents, Genero == 0 & OBES == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+AHF = c(nrow(subset(pacientsWithEvents, Genero == 1 & AHF == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+        nrow(subset(pacientsWithEvents, Genero == 0 & AHF == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+
+allFactorRelevance = data.frame(SmeA, SCApHR, HTA, DBT, DLP, TBQ, OBES, AHF)
+rownames(allFactorRelevance) = c("Men", "Women")
+
+barplot(as.matrix(allFactorRelevance), 
+        beside=TRUE,
+        legend.text=TRUE, 
+        col = c("#CC3333", "#FFCC66"),
+        ylab = "Percentege",
+        main = "Risk Factors in patients with events")
+
+```
+
+Texto...
 
 #### Range of ages of each risk factor {.tabset .tabset-fade .tabset-pills} 
 
