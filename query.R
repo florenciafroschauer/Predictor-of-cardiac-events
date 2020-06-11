@@ -179,10 +179,6 @@ ggplot(patientsDBT, aes(x = Edad, fill = Genero)) +
   ggtitle("Range of ages from patients with diabetes") + 
   theme_minimal()
 
-## DBT, HTA , OBES
-
-patientsWithSmeA = subset(pacientsWithEvents, SmeA == 1)
-
 ## Caracteristicas del dolor en personas con eventos y sin eventos
 
 
@@ -198,21 +194,12 @@ ggplot(CDpatients, aes(CD, group = Evento)) +
   xlab("Grief Type") +
   facet_grid(~Evento)
 
-## SmeA y HTA
+## HACER GRAFICO SSMEA Y DD +20 CON PACIENTES SIN Y CON EVENTOS
 
-SmeAHTA = subset(pacientsWithEvents, HTA == 1 & SmeA == 1)
-SmeAHTA = subset(SmeAHTA, select = c(Edad))
-
-ggplot(SmeAHTA, aes(x = Edad)) + 
-  geom_density(alpha = 0.4, fill = "coral1" )+ 
-  scale_fill_discrete(name = "Chest Pain Type") + 
-  theme_minimal() +
-  ggtitle("Range of ages from patients with SmeA and HTA")
-
-##
-
-SmeADD20 = subset(dataset, SmeA == 0 & DD == 1)
+SmeADD20 = subset(dataset, SmeA == 1 & DD == 0 & PDA == 1)
 SmeADD20 = subset(SmeADD20, select = c(Evento, Edad))
+SmeADD20$Evento[SmeADD20$Evento == 0] = "No events"
+SmeADD20$Evento[SmeADD20$Evento == 1] = "Events"
 
 ggplot(SmeADD20, aes(x = Edad, fill = Evento)) + 
   geom_density(alpha = 0.4) + 
@@ -220,17 +207,14 @@ ggplot(SmeADD20, aes(x = Edad, fill = Evento)) +
   xlab("Age") +
   ylab("Density") +
   ggtitle("Range of ages from patients with SmeA and DD over ") + 
-  theme_minimal()
+  theme_minimal() 
 
-## Relevancia de todos los factores en eventos pacientes con eventos cardiacos
+## Relevancia de todos los factores en pacientes con eventos cardiacos
 
-Genero = c("Men", "Women")
 SmeA = c(nrow(subset(pacientsWithEvents, Genero == 1 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
          nrow(subset(pacientsWithEvents, Genero == 0 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
 SCApHR = c(nrow(subset(pacientsWithEvents, Genero == 1 & SCApHR == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
            nrow(subset(pacientsWithEvents, Genero == 0 & SCApHR == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
-PDA = c(nrow(subset(pacientsWithEvents, Genero == 1 & PDA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
-        nrow(subset(pacientsWithEvents, Genero == 0 & PDA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
 HTA = c(nrow(subset(pacientsWithEvents, Genero == 1 & HTA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
         nrow(subset(pacientsWithEvents, Genero == 0 & HTA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
 DBT = c(nrow(subset(pacientsWithEvents, Genero == 1 & DBT == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
@@ -244,7 +228,19 @@ OBES = c(nrow(subset(pacientsWithEvents, Genero == 1 & OBES == 1))*100/nrow(subs
 AHF = c(nrow(subset(pacientsWithEvents, Genero == 1 & AHF == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
         nrow(subset(pacientsWithEvents, Genero == 0 & AHF == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
 
-allFactorRelevance = data.frame(SmeA, SCApHR, PDA, HTA, DBT, DLP, TBQ, OBES, AHF)
+allFactorRelevance = data.frame(SmeA, SCApHR, HTA, DBT, DLP, TBQ, OBES, AHF)
 rownames(allFactorRelevance) = c("Men", "Women")
 
-barplot(allFactorRelevance, beside=TRUE,legend.text=TRUE,col=c("pink","cyan"))
+barplot(as.matrix(allFactorRelevance), 
+        beside=TRUE,
+        legend.text=TRUE, 
+        col = c("#CC3333", "#FFCC66"),
+        ylab = "Percentege",
+        main = "Risk Factors in patients with events")
+
+# SA y RP combinatio (70%)
+
+patientsAHF = subset(pacientsWithEvents, AHF == 1)
+
+
+

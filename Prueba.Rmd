@@ -1,5 +1,5 @@
 ---
-title: Data analysis for cardiac predictor
+title: Análisis de datos para predictor de eventos cardíacos
 author : Juan Cruz De Lorenzo, Agustin Augurusa, Florencia Froschauer
 output: 
   html_document:
@@ -10,15 +10,15 @@ output:
     toc_float : true
     toc_depth: 6
 ---
-### Introduction
+### Introducción
 
-The Cardiology service of a university hospital sent us to carry out a system that facilitates the decision to admit / not admit a patient who enters the ward for possible cardiac problems. To do this, we were given a data set containing the data from 1000 patients with cardiac events admitted to the same hospital.
+Hay muchos factores que influyen a la hora de decidir si un paciente puede llegar a sufrir algún tipo de problema coronario, y más importante, determinar si la va a padecer en un periodo cercano de tiempo. Con el objetivo de facilitar la decisión de internar o no internar a un paciente ingresante, se realizó la siguiente investigación, con datos obtenidos de un registro de 1000 pacientes.
 
-### Data Analysis
+### Análisis de datos
 
 In the dataset we find 20 variables that represent the questions that a patient is asked when they enter the guard, to determine which ones are important we investigated the main risk factors for people with cardiac events and their causes.
 
-#### Generality {.tabset .tabset-fade .tabset-pills} 
+#### {.tabset .tabset-fade .tabset-pills} 
 
 ##### Gender
 
@@ -44,17 +44,15 @@ patientsQ5 = subset(pacientsWithEvents, select = (Genero))
 patientsQ5$Genero[patientsQ5$Genero == "1"] = "Hombre"
 patientsQ5$Genero[patientsQ5$Genero == "0"] = "Mujer"
 slices = c(sum(patientsQ5$Genero == "Hombre"), sum(patientsQ5$Genero == "Mujer"))
-lbls = c("Men", "                     Women")
+lbls = c("Hombres", "                     Mujeres")
 pct = round(slices/sum(slices)*100)
 lbls <- paste(lbls, pct)
 lbls <- paste(lbls,"%        ",sep="")
 
-pie3D(slices,labels=lbls ,main="Patients percentege by gender", col=c("#66ccff", "#ff99cc"), explode = 0.08, theta = 1, mar = c(5,5,5,5), labelcex = 1)
+pie3D(slices,labels=lbls ,main="Pacientes por genero", col=c("#66ccff", "#ff99cc"), explode = 0.08, theta = 1, mar = c(5,5,5,5), labelcex = 1)
 
 ```
-From the patients with events, 97 were men and 24 were women.
-
-As we can see in the graphic, the vast majority of the patients with events were men. 
+Hicimos este gráfico con el fin de determinar qué género se ve más afectado por problemas coronarios, como se puede ver, el porcentaje de hombres es ampliamente mayor al de mujeres. 
 
  
 ##### Age
@@ -62,38 +60,25 @@ As we can see in the graphic, the vast majority of the patients with events were
 ```{r byAge, echo=FALSE, message=FALSE}
 
 patientsQ8 = subset(pacientsWithEvents, select = (Edad))
-more65 <- round(sum(patientsQ8$Edad>55)/length(patientsQ8$Edad)*100)
-less65 <- round(sum(patientsQ8$Edad<=55)/length(patientsQ8$Edad)*100)
-pie3D(c(more65,less65),main = "Patients percentege by age", labels = c(paste(more65,"%"),paste(less65,"%")),col = c("lightgreen","#ffff99"),labelcex = 1, start = 0, explode = 0.08, theta = 1, mar = c(5,5,5,5))
-legend(.3,1,c("Age > 55","Age <= 55"),fill = c("lightgreen","#ffff99"))
+more60 <- round(sum(patientsQ8$Edad>60)/length(patientsQ8$Edad)*100)
+less60 <- round(sum(patientsQ8$Edad<=60)/length(patientsQ8$Edad)*100)
+pie3D(c(more60,less60),main = "Pacientes por edad", labels = c(paste(more60,"%"),paste(less60,"%")),col = c("lightgreen","#ffff99"),labelcex = 1, start = 0, explode = 0.08, theta = 1, mar = c(5,5,5,5))
+legend(.3,1,c("Edad > 60","Edad <= 60"),fill = c("lightgreen","#ffff99"))
 
 ```
-From the pacients with events, 36 had 55 years or less and 85 had more than 55 years
-
- 
-##### Risk factor
-
-```{r byRiskFactor, echo=FALSE, message=FALSE}
-
-slices = c(sum(pacientsWithEvents$HTA == 1), sum(pacientsWithEvents$DLP == 1), sum(pacientsWithEvents$TBQ == 1), sum(pacientsWithEvents$OBES == 1), sum(pacientsWithEvents$DBT == 1))
-lbls = c("Hypertension", "Cholesterol", "Smoking", "Obesity", "Diabetes")
-pct = round(slices/sum(pacientsWithEvents$Evento)*100)
-lbls <- paste(lbls, pct)
-lbls <- paste(lbls,"%",sep="")
-
-pie3D(slices,labels=lbls ,main="Patients with events by risk factor", col=c("#ccff99", "#ffcc99","#ff99cc", "#cc99ff", "#99ccff"), explode = 0.03, theta = 1, mar = c(5,5,5,5), labelcex = 1)
-
-```
+Según un estudio realizado por la Fundación Española del Corazón, “la prevalencia y la incidencia de insuficiencia cardiaca se duplica cada década a partir de los 40-45 años”, a su vez, “la mayor parte de los factores de riesgo cardiovascular continúan siéndolo por encima de los 80 años”. Confirmando esto, en el gráfico se observa que más del cincuenta por ciento de los pacientes con eventos son mayores a 60 años.
 
 ### {.unlsited} 
 
-#### Presence of .... in patients with events
+#### Presencia de diferentes factores en pacientes con eventos cardíacos
 
-Texto...
+Nos pareció interesante buscar una distinción entre los factores presentados en el dataset, para esto los dividimos entre causantes preexistentes y causas in actu, esto nos permitirá analizar desde otro punto de vista a los pacientes respecto a los distintos factores o síntomas que pueden presentar.
+Entre los primeros se encontrarían los principales factores de riesgo, como son el tabaquismo, la hipertensión o colesterol.
+Los segundos representan los síntomas que la mayoría de pacientes presenta al momento de tener problemas coronarios
 
-```{r Presence of Variables, echo=FALSE, message=FALSE}
-SmeA = c(nrow(subset(pacientsWithEvents, Genero == 1 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
-         nrow(subset(pacientsWithEvents, Genero == 0 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+##### Factores principales
+
+```{r Factores de riesgo, echo=FALSE, message=FALSE}
 
 SCApHR = c(nrow(subset(pacientsWithEvents, Genero == 1 & SCApHR == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
            nrow(subset(pacientsWithEvents, Genero == 0 & SCApHR == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
@@ -116,23 +101,44 @@ OBES = c(nrow(subset(pacientsWithEvents, Genero == 1 & OBES == 1))*100/nrow(subs
 AHF = c(nrow(subset(pacientsWithEvents, Genero == 1 & AHF == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
         nrow(subset(pacientsWithEvents, Genero == 0 & AHF == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
 
-allFactorRelevance = data.frame(SmeA, SCApHR, HTA, DBT, DLP, TBQ, OBES, AHF)
-rownames(allFactorRelevance) = c("Men", "Women")
+allFactorRelevance = data.frame(SCApHR, HTA, DBT, DLP, TBQ, OBES, AHF)
+rownames(allFactorRelevance) = c("Femenino", "Masculino")
 
 barplot(as.matrix(allFactorRelevance), 
         beside=TRUE,
         legend.text=TRUE, 
-        col = c("#CC3333", "#FFCC66"),
-        ylab = "Percentege",
-        main = "Risk Factors in patients with events")
+        col = c("#CC9900", "#FFFF99"),
+        ylab = "Porcentaje")
 
 ```
+Para un mejor análisis dividimos a los pacientes por género, visualizando en qué proporción están presentes los factores según el género. El factor más presente en los  hombres es la hipertensión, mientras que en las mujeres es el colesterol.
 
-Texto...
+##### Factores secundarios
 
-#### Range of ages of each risk factor {.tabset .tabset-fade .tabset-pills} 
+```{r Factores momentaneos, echo=FALSE, message=FALSE}
+SA = c(nrow(subset(pacientsWithEvents, Genero == 1 & SA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+       nrow(subset(pacientsWithEvents, Genero == 0 & SA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+SmeA = c(nrow(subset(pacientsWithEvents, Genero == 1 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+       nrow(subset(pacientsWithEvents, Genero == 0 & SmeA == 1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+MR = c(nrow(subset(pacientsWithEvents, Genero == 1 & MR == -1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+       nrow(subset(pacientsWithEvents, Genero == 0 & MR == -1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
+RP = c(nrow(subset(pacientsWithEvents, Genero == 1 & RP == -1))*100/nrow(subset(pacientsWithEvents, Genero == 1)), 
+       nrow(subset(pacientsWithEvents, Genero == 0 & RP == -1))*100/nrow(subset(pacientsWithEvents, Genero == 0)))
 
-##### Hypertension
+factoresSecundarios = data.frame(SA, SmeA, MR, RP)
+rownames(factoresSecundarios) = c("Femenino", "Masculino")
+
+barplot(as.matrix(factoresSecundarios), 
+        beside=TRUE,
+        legend.text=TRUE, 
+        col = c("#CC3333", "#FFCC66"),
+        ylab = "Porcentaje")
+```
+Este gráfico presenta variables que, por lo general, se presentan junto a problemas cardíacos, como pueden ser náuseas, disnea o dolor en el pecho. Nuevamente dividimos a los pacientes por género y se observa que tanto en los hombres como en las mujeres, los síntomas más frecuentes son sudoración, náuseas, mareos y disnea
+
+#### Rango de edad para cada factor de riesgo {.tabset .tabset-fade .tabset-pills} 
+
+##### Hipertensión
 
 ```{r HTA, echo=FALSE, message=FALSE}
 patientsHTA = subset(pacientsWithEvents, HTA == 1)
@@ -141,17 +147,17 @@ patientsHTA$Genero[patientsHTA$Genero == "1"] = "Hombre"
 patientsHTA$Genero[patientsHTA$Genero == "0"] = "Mujer"
 
 ggplot(patientsHTA, aes(x = Edad, fill = Genero)) +
-  geom_density(alpha = 0.4) +
-  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  geom_density(alpha = 0.3) +
+  scale_fill_discrete(name = "Genero", labels = c("Femenino","Masculino")) +
   theme_ridges() + 
-  xlab("Age") +
-  ylab("Density") +
-  ggtitle("Range of ages from patients with hipertension") + 
+  xlab("Edad") +
+  ylab("Densidad") + 
   theme_minimal()
 
 ```
+La presión arterial alta es una enfermedad común en la cual la sangre fluye a través de los vasos sanguíneos o arterias a presiones más altas que la normal. En el gráfico se observa una clara diferencia en la presencia de la enfermedad según el género. Los hombres presentan un pico muy alto alrededor de los 70 años, mientras que en las mujeres hay una distribución más uniforme con un pico suave también alrededor de los 70 años.
 
-##### Cholesterol
+##### Colesterol
 
 ```{r DLP, echo=FALSE, message=FALSE}
 patientsDLP = subset(pacientsWithEvents, DLP == 1)
@@ -160,17 +166,19 @@ patientsDLP$Genero[patientsDLP$Genero == "1"] = "Hombre"
 patientsDLP$Genero[patientsDLP$Genero == "0"] = "Mujer"
 
 ggplot(patientsDLP, aes(x = Edad, fill = Genero)) +
-  geom_density(alpha = 0.4) +
-  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  geom_density(alpha = 0.3) +
+  scale_fill_discrete(name = "Género", labels = c("Femenino","Masculino")) +
   theme_ridges() + 
-  xlab("Age") +
-  ylab("Density") +
-  ggtitle("Range of ages from patients with Cholesterol") + 
+  xlab("Edad") +
+  ylab("Densidad") +
   theme_minimal()
 
 ```
+Si hay grandes depósitos de placa (colesterol en sangre combinado con otras sustancias) en las arterias, un trozo de placa puede romperse. Esto puede causar que se forme un coágulo de sangre. Si el coágulo es lo suficientemente grande, puede bloquear un poco o completamente el flujo de sangre en una arteria coronaria. Los niveles de colesterol tienden a aumentar a medida que se envejece.
+Ambas cosas se ven reflejadas en el gráfico, donde los hombres de edad entre los 70 y 80 años con colesterol presentan algún problema coronario. Las mujeres presentan una meseta entre las edades de 50 a 70 años.
 
-##### Smoking
+
+##### Tabaquismo
 
 ```{r TBQ, echo=FALSE, message=FALSE}
 patientsTBQ = subset(pacientsWithEvents, TBQ == 1)
@@ -179,17 +187,19 @@ patientsTBQ$Genero[patientsTBQ$Genero == "1"] = "Hombre"
 patientsTBQ$Genero[patientsTBQ$Genero == "0"] = "Mujer"
 
 ggplot(patientsTBQ, aes(x = Edad, fill = Genero)) +
-  geom_density(alpha = 0.4) +
-  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  geom_density(alpha = 0.3) +
+  scale_fill_discrete(name = "Género", labels = c("Femenino","Masculino")) +
   theme_ridges() + 
-  xlab("Age") +
-  ylab("Density") +
-  ggtitle("Range of ages from smoking patients") + 
+  xlab("Edad") +
+  ylab("Densidad") +
   theme_minimal()
 
 ```
+El tabaquismo desemboca en otros problemas de salud como: problemas respiratorios; el daño y engrosamiento de los vasos sanguíneos, lo que causa presión arterial alta; coágulos de sangre y accidente cerebrovascular. Todos factores de riesgo para los problemas coronarios.
+Las mujeres presentan un pico en el rango de edades entre los 50 y 60 años, los hombres lo presentan en una edad más tardía, alrededor de los 70 años.
 
-##### Obesity
+
+##### Obesidad
 
 ```{r OBES, echo=FALSE, message=FALSE}
 patientsOBES = subset(pacientsWithEvents, OBES == 1)
@@ -198,15 +208,16 @@ patientsOBES$Genero[patientsOBES$Genero == "1"] = "Hombre"
 patientsOBES$Genero[patientsOBES$Genero == "0"] = "Mujer"
 
 ggplot(patientsOBES, aes(x = Edad, fill = Genero)) +
-  geom_density(alpha = 0.4) +
-  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  geom_density(alpha = 0.3) +
+  scale_fill_discrete(name = "Genero", labels = c("Femenino","Masculino")) +
   theme_ridges() + 
-  xlab("Age") +
-  ylab("Density") +
-  ggtitle("Range of ages from patientes with obesity") + 
+  xlab("Edad") +
+  ylab("Densidad") +
   theme_minimal()
 
 ```
+Estudios epidemiológicos han demostrado que la obesidad es un factor de riesgo mayor de enfermedades cardiovasculares, incluidas la enfermedad coronaria, la insuficiencia cardiaca, la fibrilación auricular, las arritmias ventriculares y la muerte súbita.
+Las mujeres presentan dos suaves picos, el primero en los 50 años y el segundo en los 70 años. En los hombres se observa un único pico más elevado a los 70 años.
 
 ##### Diabetes
 
@@ -217,17 +228,21 @@ patientsDBT$Genero[patientsDBT$Genero == "1"] = "Hombre"
 patientsDBT$Genero[patientsDBT$Genero == "0"] = "Mujer"
 
 ggplot(patientsDBT, aes(x = Edad, fill = Genero)) +
-  geom_density(alpha = 0.4) +
-  scale_fill_discrete(name = "Gender", labels = c("Female","Male")) +
+  geom_density(alpha = 0.3) +
+  scale_fill_discrete(name = "Género", labels = c("Femenino","Masculino")) +
   theme_ridges() + 
-  xlab("Age") +
-  ylab("Density") +
-  ggtitle("Range of ages from patients with diabetes") + 
+  xlab("Edad") +
+  ylab("Densidad") +
   theme_minimal()
 
 ```
+La diabetes es una enfermedad en la que los niveles de glucosa (azúcar) de la sangre están muy altos. Con el tiempo, la diabetes puede causar enfermedades cardíacas.
+Se encuentra bastante presente tanto en hombres como mujeres, en los primeros con un pico entre los 50 y 60 años, mientras que en las mujeres hay un pico más elevado entre los 70 y 80 años.
+
 
 ### {.unlisted} 
+
+Datos obtenidos de la página oficial del National Heart, Lung, and Blood Institute y del artículo Obesity and the Heart de la Revista española de cardiología.
 
 Risk factor   | Female mean age | Male mean age | Total mean 
 ------------- | --------------- | ------------- | -----------
@@ -237,4 +252,49 @@ Smoking       | 63              | 61            | 61
 Obesity       | 65              | 60            | 61   
 Diabetes      | 65              | 66            | 66
 
+#### Pacientes con síndrome anginoso
 
+```{r Anginoso y duracion de dolor +20, echo=FALSE, message=FALSE}
+
+SmeADD20 = subset(dataset, SmeA == 1 & DD == 0 & PDA == 1)
+SmeADD20 = subset(SmeADD20, select = c(Evento, Edad))
+SmeADD20$Evento[SmeADD20$Evento == 0] = "No events"
+SmeADD20$Evento[SmeADD20$Evento == 1] = "Events"
+
+ggplot(SmeADD20, aes(x = Edad, fill = Evento)) + 
+  geom_density(alpha = 0.3) + 
+  scale_fill_discrete(name = "Pacientes", labels = c("Con eventos","Sin eventos")) +
+  xlab("Edad") +
+  ylab("Densidad") +
+  ggtitle("Range of ages from patients with SmeA and DD over ") + 
+  theme_minimal()
+
+```
+El Consenso de la Sociedad Argentina de Cardiología realizado en 2013, considera como pacientes de alto riesgo aquellos que presentan síntomas anginosos, con “dolor prolongado mayor de 20 minutos de duración presente al ingreso”.
+Con esto en mente, buscamos los pacientes que cumplian con dichos síntomas y los separamos según si presentaban problemas coronarios o no.
+En el gráfico se observa un pico en los pacientes sin eventos, lo que indica que estos síntomas presentes en una temprana edad no representarían un riesgo; un segundo pico presente en los pacientes con eventos, señala un mayor riesgo de contraer algún problema coronario en una edad avanzada.
+
+#### Caracteristicas del Dolor
+
+```{r Caracteristicas del dolor, echo=FALSE, message=FALSE}
+
+CD.DD = subset(dataset, select = c(Evento, CD))
+CD.DD$Evento[CD.DD$Evento == 0] = "Sin eventos"
+CD.DD$Evento[CD.DD$Evento == 1] = "Con eventos"
+CD.DD$CD[CD.DD$CD == -1] = "PQA"
+CD.DD$CD[CD.DD$CD == 0] = "Otro"
+CD.DD$CD[CD.DD$CD == 1] = "Opresivo"
+
+
+ggplot(CD.DD, aes(CD, fill = CD)) + 
+                geom_bar(position = "dodge") +
+                facet_wrap(~Evento, scales="free_x") + 
+                geom_text(stat='count', aes(label=..count..), vjust=-1) + 
+                theme_bw() %+replace% theme(axis.title.x=element_blank(),
+                                            axis.text.x=element_blank(),
+                                            axis.ticks.x=element_blank(),
+                                            axis.text.y=element_blank(),
+                                            axis.ticks.y=element_blank()) +
+                labs(y = "Cantidad", fill = "Caracteristica del dolor")
+
+```
