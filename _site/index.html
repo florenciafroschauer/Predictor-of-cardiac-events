@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Juan Cruz De Lorenzo, Agustin Augurusa, Florencia Froschauer" />
+
+
+<title>Análisis de datos para predictor de eventos cardíacos</title>
+
+<script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Análisis de datos para predictor de eventos cardíacos</h1>
+<h4 class="author">Juan Cruz De Lorenzo, Agustin Augurusa, Florencia Froschauer</h4>
+
+</div>
+
+
+<div id="introducción" class="section level3">
+<h3>Introducción</h3>
+<p>Hay muchos factores que influyen a la hora de decidir si un paciente puede llegar a sufrir algún tipo de problema coronario, y más importante, determinar si la va a padecer en un periodo cercano de tiempo. Con el objetivo de facilitar la decisión de internar o no internar a un paciente ingresante, se realizó la siguiente investigación, con datos obtenidos de un registro de 1000 pacientes.</p>
+</div>
+<div id="análisis-de-datos" class="section level3">
+<h3>Análisis de datos</h3>
+<p>Nos presentaron 20 variables con factores influyentes para determinar la presencia de algún problema coronario, para determinar cuáles son más influyentes, investigamos los principales factores de riesgo y observamos cómo se comportan en los pacientes.</p>
+<div id="section" class="section level4 tabset tabset-fade tabset-pills">
+<h4 class="tabset tabset-fade tabset-pills"></h4>
+<div id="género" class="section level5">
+<h5>Género</h5>
+<p><img src="index_files/figure-html/byGender-1.png" width="672" /></p>
+<p>Hicimos este gráfico con el fin de determinar qué género se ve más afectado por problemas coronarios, como se puede ver, el 80% de los hombres presentan evento contra un 20% de las mujeres.</p>
+</div>
+<div id="edad" class="section level5">
+<h5>Edad</h5>
+<p><img src="index_files/figure-html/byAge-1.png" width="672" /></p>
+<p>Según un estudio realizado por la <a href="https://fundaciondelcorazon.com/prevencion/marcadores-de-riesgo/edad.html">Fundación Española del Corazón</a>, “la prevalencia y la incidencia de insuficiencia cardiaca se duplica cada década a partir de los 40-45 años”. Confirmando esto, en el gráfico se observa que más del 50% de los pacientes con eventos son mayores a 60 años.</p>
+</div>
+</div>
+</div>
+<div id="section-1" class="section level3 unlsited">
+<h3 class="unlsited"></h3>
+<div id="presencia-de-diferentes-factores-en-pacientes-con-eventos-cardíacos" class="section level4">
+<h4>Presencia de diferentes factores en pacientes con eventos cardíacos</h4>
+<p>Nos pareció interesante buscar una distinción entre los factores presentados en el dataset, para esto los dividimos entre causantes preexistentes y causas in actu, esto nos permitirá analizar desde otro punto de vista a los pacientes respecto a los distintos factores o síntomas que pueden presentar.</p>
+<div id="factores-preexistentes" class="section level5">
+<h5>Factores preexistentes</h5>
+<p>Aquí se encontrarían los principales factores de riesgo, como son el tabaquismo, la hipertensión o colesterol.</p>
+<p><img src="index_files/figure-html/Factores%20de%20riesgo-1.png" width="672" /></p>
+<p>Para un mejor análisis dividimos a los pacientes por género, visualizando en qué proporción están presentes los factores. El factor más presente en los hombres es la hipertensión, mientras que en las mujeres es el colesterol.</p>
+</div>
+<div id="rango-de-edad-para-cada-factor-de-riesgo" class="section level5 tabset tabset-fade tabset-pills">
+<h5 class="tabset tabset-fade tabset-pills">Rango de edad para cada factor de riesgo</h5>
+<div id="hipertensión" class="section level6">
+<h6>Hipertensión</h6>
+<p><img src="index_files/figure-html/HTA-1.png" width="672" /></p>
+<p>En el gráfico se observa una clara diferencia en la presencia de la enfermedad según el género. Los hombres presentan un pico muy alto alrededor de los 70 años, mientras que en las mujeres hay una distribución más uniforme con un pico suave también alrededor de los 70 años.</p>
+</div>
+<div id="colesterol" class="section level6">
+<h6>Colesterol</h6>
+<p><img src="index_files/figure-html/DLP-1.png" width="672" /></p>
+<p>Se observa que los hombres de edad entre los 70 y 80 años con colesterol presentan algún problema coronario. Las mujeres presentan una meseta entre las edades de 50 a 70 años.</p>
+</div>
+<div id="tabaquismo" class="section level6">
+<h6>Tabaquismo</h6>
+<p><img src="index_files/figure-html/TBQ-1.png" width="672" /></p>
+<p>Las mujeres presentan un pico en el rango de edades entre los 50 y 60 años, los hombres lo presentan en una edad más tardía, alrededor de los 70 años.</p>
+</div>
+<div id="obesidad" class="section level6">
+<h6>Obesidad</h6>
+<p><img src="index_files/figure-html/OBES-1.png" width="672" /></p>
+<p>Las mujeres presentan dos suaves picos, el primero en los 50 años y el segundo en los 70 años. En los hombres se observa un único pico más elevado a los 70 años.</p>
+</div>
+<div id="diabetes" class="section level6">
+<h6>Diabetes</h6>
+<p><img src="index_files/figure-html/DBT-1.png" width="672" /></p>
+<p>Se encuentra bastante presente tanto en hombres como mujeres, en los primeros con un pico entre los 50 y 60 años, mientras que en las mujeres hay un pico más elevado entre los 70 y 80 años.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="section-2" class="section level3 unlisted">
+<h3 class="unlisted"></h3>
+<p>Datos obtenidos de la página oficial del <a href="https://www.nhlbi.nih.gov/health-topics/espanol/enfermedad-coronaria">National Heart, Lung, and Blood Institute</a> y del artículo <a href="https://www.revespcardiol.org/es-obesidad-corazon-articulo-resumen-S0300893210000667?redirect=true#:~:text=Estudios%20epidemiol%C3%B3gicos%20han%20demostrado%20que,ventriculares%20y%20la%20muerte%20s%C3%BAbita.">Obesity and the Heart</a> de la Revista española de cardiología.</p>
+<div id="factores-in-actu" class="section level5">
+<h5>Factores “in actu”</h5>
+<p>Estas causas representan los síntomas que la mayoría de pacientes presenta al momento de tener problemas coronarios.</p>
+<p><img src="index_files/figure-html/Factores%20momentaneos-1.png" width="672" /></p>
+<p>Este gráfico presenta variables que, por lo general, se presentan junto a problemas cardíacos, como pueden ser náuseas, disnea o dolor en el pecho. Nuevamente dividimos a los pacientes por género y se observa que tanto en los hombres como en las mujeres, los síntomas más frecuentes son sudoración, náuseas, mareos y disnea.</p>
+</div>
+<div id="pacientes-con-síndrome-anginoso" class="section level5">
+<h5>Pacientes con síndrome anginoso</h5>
+<p><img src="index_files/figure-html/Anginoso%20y%20duracion%20de%20dolor%20+20-1.png" width="672" /></p>
+<p>El <a href="https://www.sac.org.ar/wp-content/uploads/2018/05/consenso-de-sindromes-coronarios-agudos-sin-elevacion-del-st-congreso-2013.pdf">Consenso de la Sociedad Argentina de Cardiología</a> realizado en 2013, considera como pacientes de alto riesgo aquellos que presentan síntomas anginosos, con “dolor prolongado mayor de 20 minutos de duración presente al ingreso”.</p>
+<p>En el gráfico se observa un pico en los pacientes sin eventos en una edad cercana a los 40 años; un segundo pico presente en los pacientes con eventos a los 70 años aproximadamente, señala un mayor riesgo de contraer algún problema coronario en una edad avanzada.</p>
+</div>
+<div id="caracteristicas-del-dolor" class="section level5">
+<h5>Caracteristicas del Dolor</h5>
+<p><img src="index_files/figure-html/Caracteristicas%20del%20dolor-1.png" width="672" /></p>
+<p>En el gráfico hay una mayor presencia de puntada, quemazón o acidez en los pacientes sin eventos, con un porcentaje del 39% contra un 26% de pacientes con eventos; en cuanto al dolor opresivo se ve más presente en pacientes con eventos, con el 63%, y un 50% en pacientes sin eventos. Los otros dolores aparecen en igual proporción de 11%.</p>
+<p>Datos obtenidos de la <a href="https://www.sac.org.ar/wp-content/uploads/2017/10/consenso-para-el-manejo-de-pacientes-con-dolor-precordial.pdf">Sociedad Argentina de Cardiologia</a>.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
